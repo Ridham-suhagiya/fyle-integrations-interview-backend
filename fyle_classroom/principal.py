@@ -28,8 +28,9 @@ class Principal(BaseAuthentication):
         Extracts the header containing the X-Principal
         request.
         """
+        
         principal_header = request.headers.get('X-Principal')
-
+        
         if not principal_header:
             raise AuthenticationFailed('No X-Principal header found')
 

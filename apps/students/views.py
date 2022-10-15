@@ -8,20 +8,27 @@ from .serializers import StudentAssignmentSerializer
 
 
 class AssignmentsView(generics.ListCreateAPIView):
-    serializer_class = StudentAssignmentSerializer
 
+    queryset = Student.objects.all()
+    serializer_class = StudentAssignmentSerializer
+    
     def get(self, request, *args, **kwargs):
-        assignments = Assignment.objects.filter(student__user=request.user)
+
+        assignments = (Assignment.objects.filter(student__user=request.user))
 
         return Response(
-            data=self.serializer_class(assignments, many=True).data,
-            status=status.HTTP_200_OK
+            data= self.serializer_class(assignments, many=True).data,
+            status=status.HTTP_200_OK,
+            
         )
+    
+    
 
     def post(self, request, *args, **kwargs):
+
         student = Student.objects.get(user=request.user)
         request.data['student'] = student.id
-
+   
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -42,10 +49,12 @@ class AssignmentsView(generics.ListCreateAPIView):
         request.data['student'] = student.id
 
         if 'teacher_id' in request.data:
+            
             teacher = Teacher.objects.get(pk=request.data['teacher_id'])
             request.data['teacher'] = teacher.id
 
         try:
+            print(request.user)
             assignment = Assignment.objects.get(pk=request.data['id'], student__user=request.user)
         except Assignment.DoesNotExist:
             return Response(

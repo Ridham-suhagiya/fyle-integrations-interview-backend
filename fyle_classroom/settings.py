@@ -25,12 +25,13 @@ SECRET_KEY = 'r#g(!ab-ca(_m()v!)+3q52iuqvomvcc2@b+)(&wg0y*^b7i+q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,9 +76,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'fyle_classroom.wsgi.application'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'fyle_classroom.principal.Principal',
-    )
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'fyle_classroom.principal.Principal',
+        )
 }
 
 # Database
